@@ -1,15 +1,17 @@
 #include "bsp/clock.h"
+#include "bsp/gpio.h"
 #include "bsp/systick.h"
 
-#define MAIN_LOOP_DELAY_MS      1000U
+#define MAIN_LOOP_DELAY_MS      500U
 
 int main(void) {
     clock_setup();
     systick_setup();
+    gpio_setup();
 
     while (1) {
-        
-      delay_ms(MAIN_LOOP_DELAY_MS);
+        gpio_led_toggle();
+        delay_ms(MAIN_LOOP_DELAY_MS);
     }
 
     return 0;
