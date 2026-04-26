@@ -10,6 +10,8 @@
 
 #define SSD1306_INIT_DELAY_MS  100U
 
+static uint8_t ssd1306_buffer[SSD1306_BUFFER_SIZE];
+
 static void ssd1306_write_command(uint8_t command) {
 
   const uint8_t data[] = {
@@ -25,7 +27,6 @@ static void ssd1306_write_command_pair(uint8_t command, uint8_t parameter) {
   const uint8_t data[] = {
     SSD1306_COMMAND_CONTROL_BYTE,
     command,
-    SSD1306_COMMAND_CONTROL_BYTE,
     parameter,
   };
 
@@ -70,25 +71,59 @@ void ssd1306_init(void) {
   ssd1306_write_command(SSD1306_CMD_NORMAL_DISPLAY);
 
   ssd1306_clear();
+  ssd1306_update();
 
   ssd1306_write_command(SSD1306_CMD_DISPLAY_ON);
 }
 
 void ssd1306_clear(void) {
-
-  uint8_t data[SSD1306_WIDTH + 1U];
-
-  data[0] = SSD1306_DATA_CONTROL_BYTE;
-
-  for (size_t column = 0U; column < SSD1306_WIDTH; column++) {
-
-    data[column + 1U] = SSD1306_PARAM_EMPTY_DATA;
+  for (uint16_t i = 0U; i < SSD1306_BUFFER_SIZE; i++) {
+      
+      ssd1306_buffer[i] = 0x00U;
   }
+}
+
+void ssd1306_draw_pixel(uint8_t x, uint8_t y, uint8_t color) {
+
+  if ((x >= SSD1306_WIDTH) || (y >= SSD1306_HEIGHT)) {
+    return;
+  }
+
+  const uint16_t index = x + (y / 8U) * SSD1306_WIDTH;
+
+  if (color != 0U) {
+    ssd1306_buffer[index] |= (1U << (y % 8U));
+  } else {
+    ssd1306_buffer[index] &= ~(1U << (y % 8U));
+  }
+}
+
+void ssd1306_update(void) {
 
   ssd1306_set_full_screen_address_window();
 
-  for (size_t page = 0U; page < SSD1306_PAGE_COUNT; page++) {
+  for (uint8_t page = 0U; page < SSD1306_PAGE_COUNT; page++) {
+    uint8_t data[SSD1306_WIDTH + 1U];
+
+    data[0] = SSD1306_DATA_CONTROL_BYTE;
+
+    for (uint8_t column = 0U; column < SSD1306_WIDTH; column++) {
+
+      data[column + 1U] = ssd1306_buffer[
+        page * SSD1306_WIDTH + column
+      ];
+    }
 
     i2c_write(SSD1306_I2C_ADDRESS, data, sizeof(data));
   }
+}
+
+void ssd1306_test_all_pixels_on(void) {
+
+    ssd1306_write_command(SSD1306_CMD_DISPLAY_ALL_ON);
+}
+
+void ssd1306_resume_display_from_ram(void) {
+
+    ssd1306_write_command(SSD1306_CMD_DISPLAY_ALL_ON_RESUME);
 }

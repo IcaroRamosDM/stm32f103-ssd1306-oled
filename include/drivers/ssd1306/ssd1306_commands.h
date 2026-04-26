@@ -20,6 +20,7 @@
 #define SSD1306_CMD_SET_VCOM_DESELECT              0xDBU
 
 #define SSD1306_CMD_DISPLAY_ALL_ON_RESUME          0xA4U
+#define SSD1306_CMD_DISPLAY_ALL_ON                 0xA5U
 #define SSD1306_CMD_NORMAL_DISPLAY                 0xA6U
 
 #define SSD1306_CMD_SET_COLUMN_ADDR                0x21U
