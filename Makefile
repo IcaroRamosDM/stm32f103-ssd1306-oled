@@ -1,0 +1,120 @@
+########################################
+# Project
+########################################
+
+PROJECT = oled
+
+########################################
+# Directories
+########################################
+
+BUILD_DIR = build
+
+SRC_DIR = src
+INC_DIR = include
+STARTUP_DIR = startup
+LINKER_DIR = linker
+
+########################################
+# Toolchain
+########################################
+
+CC = arm-none-eabi-gcc
+OBJCOPY = arm-none-eabi-objcopy
+SIZE = arm-none-eabi-size
+
+########################################
+# MCU
+########################################
+
+MCU = cortex-m3
+
+########################################
+# Flags
+########################################
+
+CFLAGS = \
+  -mcpu=$(MCU) \
+  -mthumb \
+  -Wall \
+  -Wextra \
+  -Werror \
+  -O2 \
+  -ffunction-sections \
+  -fdata-sections
+
+LDFLAGS = \
+  -T$(LINKER_DIR)/stm32f103c8.ld \
+  -nostartfiles \
+  -Wl,--gc-sections
+
+########################################
+# Includes
+########################################
+
+INCLUDES = \
+  -I$(INC_DIR) \
+  -I$(INC_DIR)/app \
+  -I$(INC_DIR)/bsp \
+  -I$(INC_DIR)/drivers/ssd1306 \
+  -I$(INC_DIR)/utils
+
+########################################
+# Sources
+########################################
+
+C_SOURCES = $(shell find $(SRC_DIR) -name "*.c")
+ASM_SOURCES = $(STARTUP_DIR)/startup_stm32f103c8.s
+
+########################################
+# Objects
+########################################
+
+OBJECTS = $(C_SOURCES:.c=.o)
+OBJECTS += $(ASM_SOURCES:.s=.o)
+
+########################################
+# Build
+########################################
+
+all: $(BUILD_DIR)/$(PROJECT).elf
+
+$(BUILD_DIR)/$(PROJECT).elf: $(OBJECTS)
+	mkdir -p $(BUILD_DIR)
+	$(CC) $(CFLAGS) $(OBJECTS) $(LDFLAGS) -o $@
+	$(SIZE) $@
+
+########################################
+# Compilation rules
+########################################
+
+%.o: %.c
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+%.o: %.s
+	$(CC) $(CFLAGS) -c $< -o $@
+
+########################################
+# Output formats
+########################################
+
+bin: all
+	$(OBJCOPY) -O binary $(BUILD_DIR)/$(PROJECT).elf $(BUILD_DIR)/$(PROJECT).bin
+
+hex: all
+	$(OBJCOPY) -O ihex $(BUILD_DIR)/$(PROJECT).elf $(BUILD_DIR)/$(PROJECT).hex
+
+########################################
+# Flash
+########################################
+
+flash: bin
+	st-flash write $(BUILD_DIR)/$(PROJECT).bin 0x08000000
+
+########################################
+# Clean
+########################################
+
+clean:
+	rm -rf $(BUILD_DIR)
+	find . -name "*.o" -delete
