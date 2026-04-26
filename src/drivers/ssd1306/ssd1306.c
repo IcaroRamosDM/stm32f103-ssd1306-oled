@@ -1,4 +1,5 @@
 #include "drivers/ssd1306/ssd1306.h"
+#include "drivers/ssd1306/ssd1306_fonts.h"
 
 #include "bsp/i2c.h"
 #include "bsp/systick.h"
@@ -9,6 +10,11 @@
 #include <stdint.h>
 
 #define SSD1306_INIT_DELAY_MS  100U
+
+static void ssd1306_write_command(uint8_t command);
+static void ssd1306_write_command_pair(uint8_t command, uint8_t parameter);
+static void ssd1306_set_full_screen_address_window(void);
+static uint8_t ssd1306_get_font_index(char character);
 
 static uint8_t ssd1306_buffer[SSD1306_BUFFER_SIZE];
 
@@ -95,6 +101,42 @@ void ssd1306_draw_pixel(uint8_t x, uint8_t y, uint8_t color) {
     ssd1306_buffer[index] |= (1U << (y % 8U));
   } else {
     ssd1306_buffer[index] &= ~(1U << (y % 8U));
+  }
+}
+
+static uint8_t ssd1306_get_font_index(char character) {
+
+    if ((character < (char)SSD1306_FONT_FIRST_CHAR) ||
+        (character > (char)SSD1306_FONT_LAST_CHAR)) {
+
+        return 0U;
+    }
+
+    return (uint8_t)character - SSD1306_FONT_FIRST_CHAR;
+}
+
+void ssd1306_draw_char(uint8_t x, uint8_t y, char character, uint8_t color) {
+  const uint8_t font_index = ssd1306_get_font_index(character);
+
+  for (uint8_t column = 0U; column < SSD1306_FONT_WIDTH; column++) {
+    const uint8_t column_data = ssd1306_font_5x7[font_index][column];
+
+    for (uint8_t row = 0U; row < SSD1306_FONT_HEIGHT; row++) {
+      if ((column_data & (1U << row)) != 0U) {
+        ssd1306_draw_pixel(x + column, y + row, color);
+      }
+    }
+  }
+}
+
+void ssd1306_draw_string(uint8_t x, uint8_t y, const char *text, uint8_t color) {
+  uint8_t cursor_x = x;
+
+  while (*text != '\0') {
+
+    ssd1306_draw_char(cursor_x, y, *text, color);
+    cursor_x += SSD1306_FONT_WIDTH + SSD1306_FONT_SPACING;
+    text++;
   }
 }
 

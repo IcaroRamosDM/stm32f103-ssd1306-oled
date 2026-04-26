@@ -18,9 +18,7 @@ int main(void) {
 
     ssd1306_init();
    
-    app_oled_demo_all_pixels_on();
-    delay_ms(MAIN_DEMO_DELAY_MS);
-    app_oled_demo_checkerboard();
+    app_oled_demo_text();
 
     while (1) {
 
