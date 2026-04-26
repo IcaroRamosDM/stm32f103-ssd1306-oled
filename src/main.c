@@ -2,6 +2,7 @@
 #include "bsp/gpio.h"
 #include "bsp/i2c.h"
 #include "bsp/systick.h"
+#include "drivers/ssd1306/ssd1306.h"
 
 #define MAIN_LOOP_DELAY_MS      500U
 
@@ -11,6 +12,8 @@ int main(void) {
     systick_setup();
     gpio_setup();
     i2c_setup();
+
+    ssd1306_init();
 
     while (1) {
         gpio_led_toggle();

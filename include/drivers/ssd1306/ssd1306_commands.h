@@ -1,0 +1,41 @@
+#pragma once
+
+#define SSD1306_CMD_DISPLAY_OFF                    0xAEU
+#define SSD1306_CMD_DISPLAY_ON                     0xAFU
+
+#define SSD1306_CMD_SET_DISPLAY_CLOCK_DIV          0xD5U
+#define SSD1306_CMD_SET_MULTIPLEX_RATIO            0xA8U
+#define SSD1306_CMD_SET_DISPLAY_OFFSET             0xD3U
+#define SSD1306_CMD_SET_START_LINE                 0x40U
+
+#define SSD1306_CMD_CHARGE_PUMP                    0x8DU
+#define SSD1306_CMD_MEMORY_MODE                    0x20U
+
+#define SSD1306_CMD_SEG_REMAP                      0xA1U
+#define SSD1306_CMD_COM_SCAN_DEC                   0xC8U
+
+#define SSD1306_CMD_SET_COM_PINS                   0xDAU
+#define SSD1306_CMD_SET_CONTRAST                   0x81U
+#define SSD1306_CMD_SET_PRECHARGE                  0xD9U
+#define SSD1306_CMD_SET_VCOM_DESELECT              0xDBU
+
+#define SSD1306_CMD_DISPLAY_ALL_ON_RESUME          0xA4U
+#define SSD1306_CMD_NORMAL_DISPLAY                 0xA6U
+
+#define SSD1306_CMD_SET_COLUMN_ADDR                0x21U
+#define SSD1306_CMD_SET_PAGE_ADDR                  0x22U
+
+#define SSD1306_PARAM_CLOCK_DIV_DEFAULT            0x80U
+#define SSD1306_PARAM_MULTIPLEX_64                 0x3FU
+#define SSD1306_PARAM_DISPLAY_OFFSET_NONE          0x00U
+#define SSD1306_PARAM_CHARGE_PUMP_ENABLE           0x14U
+#define SSD1306_PARAM_MEMORY_MODE_HORIZONTAL       0x00U
+#define SSD1306_PARAM_COM_PINS_128X64              0x12U
+#define SSD1306_PARAM_CONTRAST_DEFAULT             0x7FU
+#define SSD1306_PARAM_PRECHARGE_DEFAULT            0xF1U
+#define SSD1306_PARAM_VCOM_DESELECT_DEFAULT        0x40U
+#define SSD1306_PARAM_FIRST_COLUMN                 0x00U
+#define SSD1306_PARAM_LAST_COLUMN                  (SSD1306_WIDTH - 1U)
+#define SSD1306_PARAM_FIRST_PAGE                   0x00U
+#define SSD1306_PARAM_LAST_PAGE                    (SSD1306_PAGE_COUNT - 1U)
+#define SSD1306_PARAM_EMPTY_DATA                   0x00U

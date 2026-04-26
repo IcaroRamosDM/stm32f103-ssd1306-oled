@@ -1,0 +1,12 @@
+#pragma once
+
+#define SSD1306_I2C_ADDRESS              0x3CU
+
+#define SSD1306_WIDTH                    128U
+#define SSD1306_HEIGHT                   64U
+#define SSD1306_PAGE_HEIGHT              8U
+#define SSD1306_PAGE_COUNT               (SSD1306_HEIGHT / SSD1306_PAGE_HEIGHT)
+#define SSD1306_BUFFER_SIZE              (SSD1306_WIDTH * SSD1306_PAGE_COUNT)
+
+#define SSD1306_COMMAND_CONTROL_BYTE     0x00U
+#define SSD1306_DATA_CONTROL_BYTE        0x40U
