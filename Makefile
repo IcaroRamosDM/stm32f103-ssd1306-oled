@@ -16,6 +16,14 @@ STARTUP_DIR = startup
 LINKER_DIR = linker
 
 ########################################
+# libopencm3
+########################################
+
+OPENCM3_DIR = ../libopencm3
+
+OPENCM3_LIB = $(OPENCM3_DIR)/lib/libopencm3_stm32f1.a
+
+########################################
 # Toolchain
 ########################################
 
@@ -36,6 +44,7 @@ MCU = cortex-m3
 CFLAGS = \
   -mcpu=$(MCU) \
   -mthumb \
+  -DSTM32F1 \
   -Wall \
   -Wextra \
   -Werror \
@@ -46,7 +55,9 @@ CFLAGS = \
 LDFLAGS = \
   -T$(LINKER_DIR)/stm32f103c8.ld \
   -nostartfiles \
-  -Wl,--gc-sections
+  -Wl,--gc-sections \
+  -L$(OPENCM3_DIR)/lib \
+  -lopencm3_stm32f1
 
 ########################################
 # Includes
@@ -57,7 +68,8 @@ INCLUDES = \
   -I$(INC_DIR)/app \
   -I$(INC_DIR)/bsp \
   -I$(INC_DIR)/drivers/ssd1306 \
-  -I$(INC_DIR)/utils
+  -I$(INC_DIR)/utils \
+  -I$(OPENCM3_DIR)/include
 
 ########################################
 # Sources

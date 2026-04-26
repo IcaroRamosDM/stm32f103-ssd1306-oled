@@ -1,10 +1,15 @@
-#include <stdint.h>
+#include "bsp/clock.h"
+#include "bsp/systick.h"
 
-int main(void)
-{
+#define MAIN_LOOP_DELAY_MS      1000U
+
+int main(void) {
+    clock_setup();
+    systick_setup();
+
     while (1) {
         
-       // infinite loop
+      delay_ms(MAIN_LOOP_DELAY_MS);
     }
 
     return 0;
