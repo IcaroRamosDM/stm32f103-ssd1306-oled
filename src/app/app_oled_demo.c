@@ -2,20 +2,28 @@
 
 #include "drivers/ssd1306/ssd1306.h"
 #include "drivers/ssd1306/ssd1306_config.h"
+#include "drivers/ssd1306/ssd1306_fonts.h"
 
 #define APP_OLED_DEMO_PATTERN_DIVISOR   2U
 
 #define APP_OLED_DEMO_PIXEL_ON          1U
 
-#define APP_OLED_DEMO_TEXT_COLOR        1U
-#define APP_OLED_DEMO_TITLE_X           0U
-#define APP_OLED_DEMO_TITLE_Y           0U
-#define APP_OLED_DEMO_LINE_1_X          0U
+#define APP_OLED_DEMO_TEXT_COLOR         1U
+#define APP_OLED_DEMO_TITLE_X            0U
+#define APP_OLED_DEMO_TITLE_Y            0U
+#define APP_OLED_DEMO_LINE_1_X           0U
 #define APP_OLED_DEMO_LINE_1_Y          16U
-#define APP_OLED_DEMO_LINE_2_X          0U
+#define APP_OLED_DEMO_LINE_2_X           0U
 #define APP_OLED_DEMO_LINE_2_Y          32U
-#define APP_OLED_DEMO_LINE_3_X          0U
+#define APP_OLED_DEMO_LINE_3_X           0U
 #define APP_OLED_DEMO_LINE_3_Y          48U
+
+#define APP_OLED_DEMO_CHARSET_X                    0U
+#define APP_OLED_DEMO_CHARSET_Y                    0U
+#define APP_OLED_DEMO_CHARSET_LINE_HEIGHT          8U
+#define APP_OLED_DEMO_CHARSET_CHARS_PER_ROW       21U
+#define APP_OLED_DEMO_FIRST_PRINTABLE_CHAR        32U
+#define APP_OLED_DEMO_LAST_PRINTABLE_CHAR        126U
 
 void app_oled_demo_checkerboard(void) {
 
@@ -72,4 +80,32 @@ void app_oled_demo_text(void) {
   );
 
   ssd1306_update();
-}       
+}
+
+void app_oled_demo_charset(void) {
+  uint8_t x = APP_OLED_DEMO_CHARSET_X;
+  uint8_t y = APP_OLED_DEMO_CHARSET_Y;
+  uint8_t chars_in_row = 0U;
+
+  ssd1306_resume_display_from_ram();
+  ssd1306_clear();
+
+  for (char character = (char)APP_OLED_DEMO_FIRST_PRINTABLE_CHAR;
+       character <= (char)APP_OLED_DEMO_LAST_PRINTABLE_CHAR;
+       character++) {
+
+    ssd1306_draw_char(x, y, character, APP_OLED_DEMO_TEXT_COLOR);
+
+    x += SSD1306_FONT_WIDTH + SSD1306_FONT_SPACING;
+    chars_in_row++;
+
+    if (chars_in_row >= APP_OLED_DEMO_CHARSET_CHARS_PER_ROW) {
+
+      chars_in_row = 0U;
+      x = APP_OLED_DEMO_CHARSET_X;
+      y += APP_OLED_DEMO_CHARSET_LINE_HEIGHT;
+    }
+  }
+
+  ssd1306_update();
+}
