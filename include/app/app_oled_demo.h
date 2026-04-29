@@ -5,3 +5,4 @@ void app_oled_demo_all_pixels_on(void);
 void app_oled_demo_text(void);
 void app_oled_demo_charset(void);
 void app_oled_demo_shapes(void);
+void app_oled_demo_lines(void);

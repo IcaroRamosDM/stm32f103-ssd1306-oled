@@ -15,6 +15,7 @@ static void ssd1306_write_command(uint8_t command);
 static void ssd1306_write_command_pair(uint8_t command, uint8_t parameter);
 static void ssd1306_set_full_screen_address_window(void);
 static uint8_t ssd1306_get_font_index(char character);
+static int16_t ssd1306_abs_int16(int16_t value);
 
 static uint8_t ssd1306_buffer[SSD1306_BUFFER_SIZE];
 
@@ -54,6 +55,11 @@ static void ssd1306_set_full_screen_address_window(void) {
   );
 
   ssd1306_write_command(SSD1306_PARAM_LAST_PAGE);
+}
+
+static int16_t ssd1306_abs_int16(int16_t value) {
+
+    return (value < 0) ? -value : value;
 }
 
 void ssd1306_init(void) {
@@ -205,4 +211,42 @@ void ssd1306_fill_rectangle(uint8_t x, uint8_t y, uint8_t width, uint8_t height,
   {
     ssd1306_draw_horizontal_line(x, y + row, width, color);
   }
+}
+
+void ssd1306_draw_line(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t color) {
+
+    int16_t current_x = x0;
+    int16_t current_y = y0;
+
+    const int16_t target_x = x1;
+    const int16_t target_y = y1;
+
+    const int16_t delta_x = ssd1306_abs_int16(target_x - current_x);
+    const int16_t delta_y = -ssd1306_abs_int16(target_y - current_y);
+
+    const int16_t step_x = (current_x < target_x) ? 1 : -1;
+    const int16_t step_y = (current_y < target_y) ? 1 : -1;
+
+    int16_t error = delta_x + delta_y;
+
+    while (1) {
+
+        ssd1306_draw_pixel((uint8_t)current_x, (uint8_t)current_y, color);
+
+        if ((current_x == target_x) && (current_y == target_y)) {
+            break;
+        }
+
+        const int16_t double_error = 2 * error;
+
+        if (double_error >= delta_y) {
+            error += delta_y;
+            current_x += step_x;
+        }
+
+        if (double_error <= delta_x) {
+            error += delta_x;
+            current_y += step_y;
+        }
+    }
 }

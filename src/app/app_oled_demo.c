@@ -51,6 +51,22 @@
 #define APP_OLED_DEMO_LINE_X                 8U
 #define APP_OLED_DEMO_LINE_WIDTH           112U
 
+/******** Draw X ********/
+
+#define APP_OLED_DEMO_LINE_COLOR              1U
+
+#define APP_OLED_DEMO_LINE_START_X            0U
+#define APP_OLED_DEMO_LINE_START_Y            0U
+#define APP_OLED_DEMO_LINE_END_X            127U
+#define APP_OLED_DEMO_LINE_END_Y             63U
+
+#define APP_OLED_DEMO_LINE_2_START_X        127U
+#define APP_OLED_DEMO_LINE_2_START_Y          0U
+#define APP_OLED_DEMO_LINE_2_END_X            0U
+#define APP_OLED_DEMO_LINE_2_END_Y           63U
+
+/******* Draw X ********/
+
 void app_oled_demo_checkerboard(void) {
 
   ssd1306_resume_display_from_ram();
@@ -181,4 +197,28 @@ void app_oled_demo_shapes(void)
   );
 
   ssd1306_update();
+}
+
+void app_oled_demo_lines(void) {
+
+    ssd1306_resume_display_from_ram();
+    ssd1306_clear();
+
+    ssd1306_draw_line(
+            APP_OLED_DEMO_LINE_START_X,
+            APP_OLED_DEMO_LINE_START_Y,
+            APP_OLED_DEMO_LINE_END_X,
+            APP_OLED_DEMO_LINE_END_Y,
+            APP_OLED_DEMO_LINE_COLOR
+    );
+
+    ssd1306_draw_line(
+            APP_OLED_DEMO_LINE_2_START_X,
+            APP_OLED_DEMO_LINE_2_START_Y,
+            APP_OLED_DEMO_LINE_2_END_X,
+            APP_OLED_DEMO_LINE_2_END_Y,
+            APP_OLED_DEMO_LINE_COLOR
+    );
+
+    ssd1306_update();
 }

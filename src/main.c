@@ -18,7 +18,7 @@ int main(void) {
 
     ssd1306_init();
    
-    app_oled_demo_shapes();
+    app_oled_demo_lines();
 
     while (1) {
 

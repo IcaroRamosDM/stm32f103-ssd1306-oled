@@ -18,3 +18,5 @@ void ssd1306_draw_horizontal_line(uint8_t x, uint8_t y, uint8_t width, uint8_t c
 void ssd1306_draw_vertical_line(uint8_t x, uint8_t y, uint8_t height, uint8_t color);
 void ssd1306_draw_rectangle(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color);
 void ssd1306_fill_rectangle(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color);
+
+void ssd1306_draw_line(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint8_t color);
