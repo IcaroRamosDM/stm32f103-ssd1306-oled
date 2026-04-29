@@ -169,3 +169,40 @@ void ssd1306_resume_display_from_ram(void) {
 
     ssd1306_write_command(SSD1306_CMD_DISPLAY_ALL_ON_RESUME);
 }
+
+void ssd1306_draw_horizontal_line(uint8_t x, uint8_t y, uint8_t width, uint8_t color)
+{
+  for (uint8_t offset = 0U; offset < width; offset++)
+  {
+    ssd1306_draw_pixel(x + offset, y, color);
+  }
+}
+
+void ssd1306_draw_vertical_line(uint8_t x, uint8_t y, uint8_t height, uint8_t color)
+{
+  for (uint8_t offset = 0U; offset < height; offset++)
+  {
+    ssd1306_draw_pixel(x, y + offset, color);
+  }
+}
+
+void ssd1306_draw_rectangle(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color)
+{
+  if ((width == 0U) || (height == 0U))
+  {
+    return;
+  }
+
+  ssd1306_draw_horizontal_line(x, y, width, color);
+  ssd1306_draw_horizontal_line(x, y + height - 1U, width, color);
+  ssd1306_draw_vertical_line(x, y, height, color);
+  ssd1306_draw_vertical_line(x + width - 1U, y, height, color);
+}
+
+void ssd1306_fill_rectangle(uint8_t x, uint8_t y, uint8_t width, uint8_t height, uint8_t color)
+{
+  for (uint8_t row = 0U; row < height; row++)
+  {
+    ssd1306_draw_horizontal_line(x, y + row, width, color);
+  }
+}
