@@ -7,7 +7,6 @@
 #include "drivers/ssd1306/ssd1306_config.h"
 
 #define MAIN_LOOP_DELAY_MS       500U
-#define MAIN_DEMO_DELAY_MS      1000U
 
 int main(void) {
     

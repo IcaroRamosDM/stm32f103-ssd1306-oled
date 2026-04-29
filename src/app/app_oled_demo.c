@@ -8,9 +8,9 @@
 
 #define APP_OLED_DEMO_PATTERN_DIVISOR   2U
 
-#define APP_OLED_DEMO_PIXEL_ON          1U
+#define APP_OLED_DEMO_PIXEL_ON          SSD1306_COLOR_WHITE
 
-#define APP_OLED_DEMO_TEXT_COLOR         1U
+#define APP_OLED_DEMO_TEXT_COLOR         SSD1306_COLOR_WHITE
 #define APP_OLED_DEMO_TITLE_X            0U
 #define APP_OLED_DEMO_TITLE_Y            0U
 #define APP_OLED_DEMO_LINE_1_X           0U
@@ -27,7 +27,7 @@
 #define APP_OLED_DEMO_FIRST_PRINTABLE_CHAR        32U
 #define APP_OLED_DEMO_LAST_PRINTABLE_CHAR        126U
 
-#define APP_OLED_DEMO_SHAPE_COLOR            1U
+#define APP_OLED_DEMO_SHAPE_COLOR            SSD1306_COLOR_WHITE
 
 #define APP_OLED_DEMO_BORDER_X               0U
 #define APP_OLED_DEMO_BORDER_Y               0U
@@ -55,7 +55,7 @@
 
 /******** Draw X ********/
 
-#define APP_OLED_DEMO_LINE_COLOR              1U
+#define APP_OLED_DEMO_LINE_COLOR              SSD1306_COLOR_WHITE
 
 #define APP_OLED_DEMO_LINE_START_X            0U
 #define APP_OLED_DEMO_LINE_START_Y            0U

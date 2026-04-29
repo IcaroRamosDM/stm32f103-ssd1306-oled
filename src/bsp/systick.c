@@ -4,10 +4,10 @@
 
 #include <libopencm3/cm3/systick.h>
 
-static volatile uint32_t system_milis = 0U;
+static volatile uint32_t system_millis = 0U;
 
 void sys_tick_handler(void) {
-    system_milis++;
+    system_millis++;
 }
 
 void systick_setup(void) {
@@ -18,9 +18,9 @@ void systick_setup(void) {
 }
 
 void delay_ms(uint32_t delay) {
-    const uint32_t start = system_milis;
+    const uint32_t start = system_millis;
 
-    while ((system_milis - start) < delay) {
+    while ((system_millis - start) < delay) {
         __asm__("nop");
     }
 }
