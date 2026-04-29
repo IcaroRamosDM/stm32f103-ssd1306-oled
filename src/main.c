@@ -17,13 +17,12 @@ int main(void) {
     i2c_setup();
 
     ssd1306_init();
-   
-    app_oled_demo_lines();
 
     while (1) {
 
+        app_oled_demo_run();
+
         gpio_led_toggle();
-        delay_ms(MAIN_LOOP_DELAY_MS);
     }
 
     return 0;

@@ -4,6 +4,8 @@
 #include "drivers/ssd1306/ssd1306_config.h"
 #include "drivers/ssd1306/ssd1306_fonts.h"
 
+#include "bsp/systick.h"
+
 #define APP_OLED_DEMO_PATTERN_DIVISOR   2U
 
 #define APP_OLED_DEMO_PIXEL_ON          1U
@@ -66,6 +68,8 @@
 #define APP_OLED_DEMO_LINE_2_END_Y           63U
 
 /******* Draw X ********/
+
+#define APP_OLED_DEMO_SCREEN_DELAY_MS       1500U
 
 void app_oled_demo_checkerboard(void) {
 
@@ -221,4 +225,25 @@ void app_oled_demo_lines(void) {
     );
 
     ssd1306_update();
+}
+
+void app_oled_demo_run(void) {
+
+    app_oled_demo_text();
+    delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
+
+    app_oled_demo_charset();
+    delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
+
+    app_oled_demo_shapes();
+    delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
+
+    app_oled_demo_lines();
+    delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
+
+    app_oled_demo_checkerboard();
+    delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
+
+    app_oled_demo_all_pixels_on();
+    delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
 }
