@@ -68,7 +68,6 @@ INCLUDES = \
   -I$(INC_DIR)/app \
   -I$(INC_DIR)/bsp \
   -I$(INC_DIR)/drivers/ssd1306 \
-  -I$(INC_DIR)/utils \
   -I$(OPENCM3_DIR)/include
 
 ########################################
