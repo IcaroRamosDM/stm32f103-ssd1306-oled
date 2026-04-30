@@ -21,7 +21,6 @@ int main(void) {
 
         app_oled_demo_run();
 
-        gpio_led_toggle();
     }
 
     return 0;

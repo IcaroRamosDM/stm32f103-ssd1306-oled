@@ -5,6 +5,7 @@
 #include "drivers/ssd1306/ssd1306_fonts.h"
 
 #include "bsp/systick.h"
+#include "bsp/gpio.h"
 
 #define APP_OLED_DEMO_PATTERN_DIVISOR   2U
 
@@ -230,20 +231,26 @@ void app_oled_demo_lines(void) {
 void app_oled_demo_run(void) {
 
     app_oled_demo_text();
+    gpio_led_toggle();
     delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
 
     app_oled_demo_charset();
+    gpio_led_toggle();
     delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
 
     app_oled_demo_shapes();
+    gpio_led_toggle();
     delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
 
     app_oled_demo_lines();
+    gpio_led_toggle();
     delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
 
     app_oled_demo_checkerboard();
+    gpio_led_toggle();
     delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
 
     app_oled_demo_all_pixels_on();
+    gpio_led_toggle();
     delay_ms(APP_OLED_DEMO_SCREEN_DELAY_MS);
 }
