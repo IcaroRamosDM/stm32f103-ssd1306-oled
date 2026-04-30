@@ -127,6 +127,22 @@ ssd1306_update();
 
 ---
 
+## Preview
+
+### Hardware setup
+
+![Hardware setup](docs/images/hardware_setup.jpg)
+
+### OLED demos
+
+![Text demo](docs/images/oled_text_demo.jpg)
+
+![SHapes demo](docs/images/oled_shapes_demo.jpg)
+
+![Lines demo](docs/images/oled_lines_demo.jpg)
+
+---
+
 ## Demo
 
 The demo application rotates through:
