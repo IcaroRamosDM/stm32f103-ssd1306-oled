@@ -168,9 +168,9 @@ MIT
 
 ## Author
 
-Icaro Ramos Rodrigues dos Santos
-Embedded Systems | Firmware | Arm | STM32 | C | Verilog | UVM | Design Verification
+Icaro Ramos Rodrigues dos Santos<br>
+Embedded Systems | Firmware | Arm | STM32 | C | Verilog | UVM | Design Verification<br><br>
 
-GitHub: https://github.com/IcaroRamosDM
-LinkedIn: https://www.linkedin.com/in/icaro-ramos-r/
-icaroelt@gmail.com
+GitHub: https://github.com/IcaroRamosDM<br>
+LinkedIn: https://www.linkedin.com/in/icaro-ramos-r/<br>
+icaroelt@gmail.com<br>
