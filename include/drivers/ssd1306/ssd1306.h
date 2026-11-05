@@ -2,8 +2,8 @@
 
 #include <stdint.h>
 
-#define SSD1306_COLOR_BLACK     0U
-#define SSD1306_COLOR_WHITE     1U
+#define SSD1306_COLOR_BLACK 0U
+#define SSD1306_COLOR_WHITE 1U
 
 void ssd1306_init(void);
 void ssd1306_clear(void);

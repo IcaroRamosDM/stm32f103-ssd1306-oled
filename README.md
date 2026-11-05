@@ -1,176 +1,51 @@
-# STM32F103C8 SSD1306 OLED Driver
+# STM32F103 SSD1306 OLED
 
-Bare-metal SSD1306 OLED driver for the STM32F103C8 Blue Pill using libopencm3, I2C and a Makefile-based build system.
+[![Checks](https://github.com/IcaroRamosDM/stm32f103-ssd1306-oled/actions/workflows/checks.yml/badge.svg)](https://github.com/IcaroRamosDM/stm32f103-ssd1306-oled/actions/workflows/checks.yml)
 
----
+Bare-metal SSD1306 128×64 display firmware using libopencm3 and I²C.
+It includes a 1024-byte framebuffer, ASCII text, pixels, lines and rectangles.
 
-## Features
+## Rendering contract
 
-- STM32F103C8 Blue Pill support
-- SSD1306 128x64 OLED support over I2C
-- Framebuffer-based rendering
-- Pixel drawing
-- Text rendering with 5x7 ASCII font
-- Lines, rectangles and filled rectangles
-- Rotating demo application
-- Clean BSP / driver / app architecture
-- No STM32CubeIDE or STM32CubeMX
-
----
-
-## Hardware
-
-- STM32F103C8 Blue Pill
-- SSD1306 128x64 I2C OLED display
-- ST-Link V2
-- USB cable
-- Jumper wires
-
----
-
-## Wiring
-
-| SSD1306 OLED | STM32F103C8 |
-|---|---|
-| VCC | 3.3V |
-| GND | GND |
-| SCL | PB6 |
-| SDA | PB7 |
-
----
-
-## Project Structure
-
-```text
-.
-├── docs/
-├── include/
-│   ├── app/
-│   ├── bsp/
-│   └── drivers/
-├── linker/
-├── src/
-│   ├── app/
-│   ├── bsp/
-│   └── drivers/
-├── startup/
-└── Makefile
-```
----
+Coordinates start at the upper-left corner: x = 0–127 and y = 0–63.
+Shapes and glyphs are clipped at display edges. Off-screen coordinates do not
+wrap back to the opposite edge. Strings stop at the right edge and NULL text is ignored.
+Text draws only the glyph's active pixels; clear the background explicitly when needed.
 
 ## Build
 
-This project expects `libopencm3` to be available next to the project directory:
+[Build instructions](docs/build.md)
 
-```text
+~~~sh
+make all
+make test
+make sanitize
+~~~
 
-~/projects/
-├── libopencm3/
-└── stm32f103-ssd1306-oled/
-```
+## Hardware and demonstration
 
-### Build
-
-```bash
-make
-```
-
-
-### Generate binary:
-
-```bash
-make bin
-```
-
-### Flash
-
-```bash
-make flash
-```
-
-### Erase
-
-```bash
-make erase
-```
-
-### Erase + build + flash
-
-```bash
-make reflash
-```
-
-### Clean
-
-It is a good practice to always clean before building the project.
-
-```bash
-make clean
-```
-
----
-
-## Basic Usage
-
-Example inside `src/main.c`:
-
-```bash
-#include "drivers/ssd1306/ssd1306.h"
-
-ssd1306_init();
-
-ssd1306_clear();
-ssd1306_draw_string(0U, 0U, "Hello", SSD1306_COLOR_WHITE);
-ssd1306_draw_rectangle(0U, 16U, 64U, 24U, SSD1306_COLOR_WHITE);
-ssd1306_update();
-```
-
----
-
-## Preview
-
-### Hardware setup
+[Wiring](docs/wiring.md): PB6 = SCL, PB7 = SDA, address 0x3C by default.
+The demo rotates through text, printable characters, shapes, lines and pixel tests.
 
 ![Hardware setup](docs/images/hardware_setup.jpg)
+![Text](docs/images/oled_text_demo.jpg)
+![Shapes](docs/images/oled_shapes_demo.jpg)
+![Lines](docs/images/oled_lines_demo.jpg)
 
-### OLED demos
-
-![Text demo](docs/images/oled_text_demo.jpg)
-
-![SHapes demo](docs/images/oled_shapes_demo.jpg)
-
-![Lines demo](docs/images/oled_lines_demo.jpg)
-
----
-
-## Demo
-
-The demo application rotates through:
-
-- Text rendering
-- Full printable ASCII charset
-- Shape primitives
-- Diagonal lines
-- Checkerboard pattern
-- All pixels on test
-
----
-
-## Notes
-
-The OLED display keeps its internal RAM while powered. Erasing or resetting the STM32 does not necessarily clear the OLED screen unless the firmware explicitly clears it, the OLED is power-cycled, or its hardware reset pin is controlled.
-
----
+The photos document the existing setup. Resetting the MCU does not necessarily
+clear the display's RAM; initialization explicitly clears and updates the framebuffer.
 
 ## License
 
-MIT
+[MIT](LICENSE).
 
 ## Author
 
-Icaro Ramos Rodrigues dos Santos<br>
-Embedded Systems | Firmware | Arm | STM32 | C | Verilog | UVM | Design Verification<br><br>
+**Icaro Ramos Rodrigues dos Santos**<br>
+Electronic Engineer
 
-GitHub: https://github.com/IcaroRamosDM<br>
-LinkedIn: https://www.linkedin.com/in/icaro-ramos-r/<br>
-icaroelt@gmail.com<br>
+Embedded Systems | Firmware | C | C++ | Python | Dart | Assembly | Hardware Design | PCB Design | STM32 | ARM Cortex-M | Linux | Windows | RISC-V | Verilog | SystemVerilog | UVM | Design Verification | Instrumentation | Signal Processing | Qt | FLTK
+
+GitHub: [IcaroRamosDM](https://github.com/IcaroRamosDM)<br>
+LinkedIn: [icaro-ramos-r](https://www.linkedin.com/in/icaro-ramos-r/)<br>
+[icaroelt@gmail.com](mailto:icaroelt@gmail.com)

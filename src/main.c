@@ -6,10 +6,10 @@
 #include "drivers/ssd1306/ssd1306.h"
 #include "drivers/ssd1306/ssd1306_config.h"
 
-#define MAIN_LOOP_DELAY_MS       500U
+#define MAIN_LOOP_DELAY_MS 500U
 
 int main(void) {
-    
+
     clock_setup();
     systick_setup();
     gpio_setup();
@@ -20,7 +20,6 @@ int main(void) {
     while (1) {
 
         app_oled_demo_run();
-
     }
 
     return 0;
